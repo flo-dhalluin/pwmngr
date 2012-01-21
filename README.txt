@@ -4,9 +4,9 @@ PwMngr
 A CLI password manager. 
 
 pwmngr was designed with a few requirement : 
+
 * use a dead simple CLI interface
-* have a readable text file as backend, that could be checked in a vcs, or 
-  carried around the cloud. 
+* have a readable text file as backend, that could be checked in a vcs, or carried around the cloud. 
 * be secure. 
 
 
@@ -24,6 +24,7 @@ usage
 =====
 example
 -------
+::
 
   $ ./pwmngr -s test.site.net
   password file does not exist, do you want to create one ? [N/y]y
