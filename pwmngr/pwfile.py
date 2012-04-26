@@ -138,7 +138,7 @@ def main() :
     try :
         import gtk
         cb = gtk.Clipboard()
-    except ImportError :
+    except :
         cb = None 
 
     parser = argparse.ArgumentParser()
