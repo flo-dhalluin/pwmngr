@@ -119,7 +119,7 @@ class PwDb :
     def crypt(self,pwd) :
         h = hashlib.sha1(str(time.time())).digest()
         dp = self._get_pwd(h)
-        ciph = AES.new(dp, AES.MODE_CBC)
+        ciph = AES.new(dp,mode=AES.MODE_CBC,IV=chr(0)*16)
         plain = crypto_pad(pwd,16)
         cryptd = ciph.encrypt(plain)
         return cryptd,h
