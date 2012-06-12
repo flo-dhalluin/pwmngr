@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(name="Pwmngr",
-      version="0.1dev",
+      version="0.2dev",
       author="Florent D'halluin",
       author_email="flal@melix.net",
       url="https://bitbucket.org/flal/pwmngr",
