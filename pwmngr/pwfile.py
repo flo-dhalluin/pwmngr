@@ -126,7 +126,7 @@ class PwDb :
 
     def decrypt(self,crypt=None, hash=None):
         dp = self._get_pwd(hash)
-        ciph = AES.new(dp,AES.MODE_CBC)
+        ciph = AES.new(dp,mode=AES.MODE_CBC,IV=chr(0)*16)
         plain = ciph.decrypt(crypt)
         plain = crypto_unpad(plain,16)
         return plain
