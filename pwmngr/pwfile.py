@@ -96,40 +96,45 @@ class PwDb :
                     c.write(l)
         if not updated :
             c.write(enc_line)
+        # also update in memory reprsentation
+        self.pwdb[key] = d
         with open(self.path,'w') as f :
             f.write(c.getvalue())
 
 
-    def _get_pwd(self,h) :
-        pawd = getpass.getpass("password :")
+    def _get_pwd(self,h, master_password) :
+        if master_password == None :
+            pawd = getpass.getpass("password :")
+        else :
+            pawd = master_password
         return pbkdf2(pawd, h)
         
     def has_key(self,key) :
         return key in self.pwdb
 
-    def set_key(self,key,passwd) :
-        crypt, h = self.crypt(passwd)
+    def set_key(self,key,passwd, master_password=None) :
+        crypt, h = self.crypt(passwd, master_password)
         data = {"pwd":crypt,"hash":h}
         self._update_file(key,data)
 
-    def get_key(self,key) :
+    def get_key(self,key, master_password=None) :
         d = self.pwdb.get(key,None)
         if d :
-            return self.decrypt(d["pwd"],d["hash"])
+            return self.decrypt(d["pwd"],d["hash"], master_password)
         else :
             raise KeyError
 
 
-    def crypt(self,pwd) :
+    def crypt(self,pwd, master_password) :
         h = hashlib.sha1(str(time.time())).digest()
-        dp = self._get_pwd(h)
-        ciph = AES.new(dp,mode=AES.MODE_CBC,IV=chr(0)*16)
+        derived_password = self._get_pwd(h, master_password)
+        ciph = AES.new(derived_password,mode=AES.MODE_CBC,IV=chr(0)*16)
         plain = crypto_pad(pwd,16)
         cryptd = ciph.encrypt(plain)
         return cryptd,h
 
-    def decrypt(self,crypt=None, hash=None):
-        dp = self._get_pwd(hash)
+    def decrypt(self,crypt=None, hash=None, master_password=None):
+        dp = self._get_pwd(hash, master_password)
         ciph = AES.new(dp,mode=AES.MODE_CBC,IV=chr(0)*16)
         plain = ciph.decrypt(crypt)
         plain = crypto_unpad(plain,16)
