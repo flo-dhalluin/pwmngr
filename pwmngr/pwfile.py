@@ -166,7 +166,7 @@ def main() :
 
     def askYorexit(msg) :
             a = raw_input(msg)
-            if(a == 'y') :
+            if(a.upper() == 'Y') :
                 return True
             else :
                 print "aborting"
