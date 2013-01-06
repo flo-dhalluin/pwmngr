@@ -9,7 +9,7 @@ setup(name="Pwmngr",
       scripts=['bin/pwmngr'],
       license="Beerware",
       description="a CLI password manager",
-      long_description=open('README.txt').read(),
+      long_description=open('README.rst').read(),
       install_requires=[
         "pycrypto >= 2.4",
         ],
