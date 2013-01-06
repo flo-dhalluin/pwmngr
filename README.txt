@@ -56,3 +56,14 @@ optional arguments:
   -v, --show            default pwmngr store the clear password to clipboard.
                         if set diplay the clear password to stdout
   -s, --set             set a password
+
+.pwmngr file format
+-------------------
+
+each line is an entry for a target password. It consists of 3 items, separated by 2spaces. 
+
+* item1 : the name of realm for password (identifier of password)
+* item2 : base64 encoded of the salt used for key derivation
+* item3 : base64 encoded of the crypted password. 
+
+password is crypted with AES256, with the key being derivated with pbkdf2 from the master_password and the salt stored in the file. (1024 rounds with sha1 hash)  
