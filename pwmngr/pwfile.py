@@ -27,6 +27,9 @@ specials_chars = "#@$_-!?%=()[]"
 
 
 def generate_password(length=15) :
+    """
+    generate a random password of length + 2 random digits
+    """
     random.seed(Random.new().read(6))
     # make sure we have 2 digits 
     dig = str(random.randint(10,100))
@@ -34,7 +37,8 @@ def generate_password(length=15) :
     alph = "".join([random.choice(book) for _ in range(length - 2)])
     return alph + dig 
 
-
+# padding functions for AES, so that the given
+# string is padded to multiple of bytes_num bytes
 def crypto_pad(txt,bytes_num) :
     r = len(txt)%bytes_num
     b =  bytes_num - r
