@@ -1,17 +1,18 @@
 import unittest
 import tempfile
 import os
-from pwmngr.pwfile import PwDb
+from pwmngr.manager import PwDb
 
 
 class TestPwDb(unittest.TestCase):
     def setUp(self):
-        _, self.tempdb = tempfile.mkstemp()
+        handle = tempfile.NamedTemporaryFile(delete=False)
+        self.tempdb = handle.name
+        handle.close()
+
         self.pwdb = PwDb(self.tempdb)
-        self.pwdb.parse_file()
         key, self.plain = "thiskey", "thispwd"        
         self.pwdb.set_key(key, self.plain, "pass")
-
 
     def tearDown(self):
         os.remove(self.tempdb)

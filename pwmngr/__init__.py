@@ -1,2 +1,2 @@
 
-from pwfile import main
+from manager import main
